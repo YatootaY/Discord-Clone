@@ -1,29 +1,49 @@
 import React,{useRef} from 'react'
-import firestore from "../firebase.js"
-import {addDoc, collection} from "@firebase/firestore"
+import {db} from '../firebase.js'
+import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from '@firebase/firestore'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const Chat = () => {
     
-    const messageRef = useRef();
-    const ref = collection(firestore,"main message")
-
+    const [message,setMessage] = useState([])
+    const messageRef = useRef()
     const handleSave = async (e) => {
-        e.preventDefault();
-        console.log(messageRef.current.value)
+        e.preventDefault()
 
-        let data = {
-            message: messageRef.current.value
-        }
         try{
-            addDoc(ref,data)
-        }catch(e){
-            console.log(e)
+            await addDoc(collection(db,"discord msg"), {
+                text: messageRef.current.value,
+                created: Timestamp.now()
+            })
+        }catch{
+            alert(e)
         }
     }
 
+    useEffect( () => {
+        const q = query(collection(db,"discord msg"),orderBy("created"))
+        onSnapshot(q,(querySnapshot) => {
+            setMessage(querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                data: doc.data(),
+            })))
+        })
+        console.log(message)
+    },[])
+    
     return(
         <div>
-            <h1 className='text-white'>Hello</h1>
+            <div>
+                {
+                    message.map((msg) => {
+                        return(<h2 id={msg.id}>
+                            {msg.data.text}
+                        </h2>)
+                    })
+                }
+            </div>
+            
             <form onSubmit={handleSave} className="text-black">
                 <input type="text" placeholder='Enter your message' ref={messageRef} />
                 <button type='submit'>Sent</button>
