@@ -4,7 +4,7 @@ import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from '@fireba
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-const Chat = () => {
+const Chat = ({server}) => {
     
     const [message,setMessage] = useState([])
     const messageRef = useRef()
@@ -12,7 +12,7 @@ const Chat = () => {
         e.preventDefault()
 
         try{
-            await addDoc(collection(db,"discord msg"), {
+            await addDoc(collection(db,server), {
                 text: messageRef.current.value,
                 created: Timestamp.now()
             })
@@ -22,15 +22,16 @@ const Chat = () => {
     }
 
     useEffect( () => {
-        const q = query(collection(db,"discord msg"),orderBy("created"))
+        console.log(server)
+        const q = query(collection(db,server),orderBy("created"))
+        console.log(q)
         onSnapshot(q,(querySnapshot) => {
             setMessage(querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 data: doc.data(),
             })))
         })
-        console.log(message)
-    },[])
+    },[server])
     
     return(
         <div>
