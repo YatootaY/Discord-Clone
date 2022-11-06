@@ -11,7 +11,7 @@ const App = () => {
   }
 
   return (
-    <div className="grid grid-cols-12 text-white bg-slate-800 h-screen space-x-5">
+    <div className="flex text-white bg-slate-800 h-screen">
       <Nav serverClicked={serverClicked}/>
       <Chat server={server}/>
     </div>
