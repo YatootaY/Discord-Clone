@@ -15,12 +15,12 @@ const App = () => {
   const serverClicked = (serverName) => {
     setServer(serverName)
   }
-  const signIn = () => {
+  const signInClicked = () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(getAuth(),provider)
   }
 
-  const signOutUser = () => {
+  const signOutClicked = () => {
     signOut(getAuth());
   }
 
@@ -66,11 +66,11 @@ const App = () => {
     initFirebaseAuth()
   },[])
   
-  
+
   return (
     <div className="flex text-white bg-slate-800 h-screen">
-      <Nav serverClicked={serverClicked}/>
-      <Chat server={server} signIn={signIn} signOutUser={signOutUser}/>
+      <Nav serverClicked={serverClicked} signInClicked={signInClicked} signOutClicked={signOutClicked}/>
+      <Chat server={server}/>
     </div>
   );
 }

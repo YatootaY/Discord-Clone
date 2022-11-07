@@ -3,16 +3,14 @@ import discordLogo from "../images/discord logo.png"
 import onePiece from "../images/one piece.jpg"
 import firebase from "../images/firebase.png"
 
-const Nav = ({serverClicked,signIn,signOutUser}) => {
+const Nav = ({serverClicked,signInClicked,signOutClicked}) => {
 
-    console.log(signIn)
-    console.log(signOutUser)
     return(
         <div className="bg-black self-stretch px-5 py-5 flex flex-col items-center w-fit gap-7">
         <div id="authArea">
             <h1 id="username" hidden="true"></h1>
-            <button id="signIn" hidden="true" onClick={signIn}>Sign in</button>
-            <button id="signOut" hidden="true" onClick={signOutUser}>Sign Out</button>
+            <button id="signIn" hidden="true" onClick={signInClicked}>Sign in</button>
+            <button id="signOut" hidden="true" onClick={signOutClicked}>Sign Out</button>
         </div>
             <div className="pb-5 border-b border-slate-800 border-lengt flex flex-col gap-3 items-center">
                 <h1 className="font-semibold text-sm text-slate-400">Discord</h1>
