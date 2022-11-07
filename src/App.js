@@ -38,15 +38,20 @@ const App = () => {
     const signInBtn = document.getElementById("signIn")
     const signOutBtn = document.getElementById("signOut")
     const userNameEle = document.getElementById("username")
+    const profileEle = document.getElementById("profilePic")
     if (isUserSignedIn()) { 
       const userName = getUserName();
       userNameEle.textContent = userName;
-  
+      const profileUrl = getProfilePicUrl();
+      profileEle.style.backgroundImage = 'url(' + profileUrl + '?sz=150)';
+      
+      profileEle.removeAttribute('hidden');
       userNameEle.removeAttribute('hidden');
       signOutBtn.removeAttribute('hidden');
 
       signInBtn.setAttribute('hidden', 'true');
     } else { 
+      profileEle.setAttribute('hidden','true');
       userNameEle.setAttribute('hidden', 'true');
       signOutBtn.setAttribute('hidden', 'true');
       signInBtn.removeAttribute('hidden');
@@ -60,6 +65,13 @@ const App = () => {
 
   const isUserSignedIn = () => {
     return !!getAuth().currentUser;
+  }
+
+  const addSizeToGoogleProfilePic = (url) => {
+    if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
+      return url + '?sz=150';
+    }
+    return url;
   }
 
   useEffect( () => {

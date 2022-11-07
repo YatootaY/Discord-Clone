@@ -8,6 +8,7 @@ const Nav = ({serverClicked,signInClicked,signOutClicked}) => {
     return(
         <div className="bg-black self-stretch px-5 py-5 flex flex-col items-center w-fit gap-7">
         <div id="authArea">
+            <div className='w-16 h-16 rounded-full bg-center bg-cover' id="profilePic" hidden="true"></div>
             <h1 id="username" hidden="true"></h1>
             <button id="signIn" hidden="true" onClick={signInClicked}>Sign in</button>
             <button id="signOut" hidden="true" onClick={signOutClicked}>Sign Out</button>
