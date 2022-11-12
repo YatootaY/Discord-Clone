@@ -43,7 +43,7 @@ const App = () => {
       const userName = getUserName();
       userNameEle.textContent = userName;
       const profileUrl = getProfilePicUrl();
-      profileEle.style.backgroundImage = 'url(' + profileUrl + '?sz=150)';
+      profileEle.src =  profileUrl + '?sz=150';
       
       profileEle.removeAttribute('hidden');
       userNameEle.removeAttribute('hidden');
