@@ -5,11 +5,11 @@ import Server from "./component/Server.js"
 import MainServer from "./component/MainServer.js"
 import LoginArea from "./component/LoginArea.js"
 
-const Nav = ({serverClicked,signInClicked,signOutClicked}) => {
+const Nav = ({serverClicked}) => {
 
     return(
         <div className="bg-black self-stretch px-5 py-5 flex flex-col items-center w-fit gap-7">
-            <LoginArea signInClicked={signInClicked} signOutClicked={signOutClicked}/>
+            
             <MainServer serverClicked={serverClicked}/>
 
             <Server pic={onePiece} altName="onePiece" serverClicked={serverClicked}/>
