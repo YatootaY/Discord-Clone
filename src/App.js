@@ -82,7 +82,7 @@ const App = () => {
   return (
     <div className="flex text-white bg-slate-800 h-screen">
       <Nav serverClicked={serverClicked}/>
-      <Chat server={server} signInClicked={signInClicked} signOutClicked={signOutClicked}/>
+      <Chat server={server} signInClicked={signInClicked} signOutClicked={signOutClicked} isUserSignedIn={isUserSignedIn}/>
     </div>
   );
 }

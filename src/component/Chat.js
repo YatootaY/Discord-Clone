@@ -6,13 +6,21 @@ import { useEffect } from 'react'
 import Messages from "./component/Messages.js"
 import LoginArea from './component/LoginArea.js'
 
-const Chat = ({server,signInClicked,signOutClicked}) => {
+const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn}) => {
     
     const [message,setMessage] = useState([])
     const messageRef = useRef()
     const handleSave = async (e) => {
         e.preventDefault()
-
+        console.log(isUserSignedIn)
+        if (!isUserSignedIn()){
+            alert("You need to login to sent messages");
+            return ;
+        }
+        if (messageRef.current.value == ""){
+            alert("You cannot sent empty message");
+            return ;
+        }
         try{
             await addDoc(collection(db,server), {
                 text: messageRef.current.value,
