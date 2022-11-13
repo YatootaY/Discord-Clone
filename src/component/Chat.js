@@ -46,8 +46,9 @@ const Chat = ({server,signInClicked,signOutClicked}) => {
                 <LoginArea signInClicked={signInClicked} signOutClicked={signOutClicked}/>
             </div>
             <Messages message={message}/>
-            <form onSubmit={handleSave} className="m-4 ">
-                <input id="msg" type="text" placeholder='Enter your message' ref={messageRef} autoComplete="off" className="w-full focus:outline-none bg-slate-600 px-5 py-3 pl-10 rounded-lg"/>
+            <form onSubmit={handleSave} className="m-4 px-3 py-1 gap-5 flex items-center bg-slate-600 rounded-lg">
+                <input className="focus:outline-none bg-slate-600 p-2 ml-3 flex-grow" id="msg" type="text" placeholder='Enter your message' ref={messageRef} autoComplete="off"/>
+                <svg className="h-6 w-6 mr-3 text-slate-400 hover:text-slate-200 transition-all duration-200 cursor-pointer"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />  <circle cx="8.5" cy="8.5" r="1.5" />  <polyline points="21 15 16 10 5 21" /></svg>
             </form>
         </div>
     )
