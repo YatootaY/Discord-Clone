@@ -7,7 +7,7 @@ const Messages = ({message}) => {
                 {
                     message.map((msg) => {
                         return(
-                        <div className='px-7 py-1 space-y-1 my-1 hover:bg-[#1d2738] cursor-pointer' id={msg.id}>
+                        <div className='px-7 py-1 space-y-1 my-1 hover:bg-[#1d2738] cursor-pointer' key={msg.id}>
                             <div className='flex gap-3 align-baseline'>
                                 <h2 className='text-white font-semibold'>Kaung Nay Lin Khant</h2>
                                 <h3 className='text-[0.6rem]'>{
