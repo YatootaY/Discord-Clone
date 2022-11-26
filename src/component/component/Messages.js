@@ -7,9 +7,11 @@ const Messages = ({message}) => {
                 {
                     message.map((msg) => {
                         return(
-                        <div className='px-7 py-1 space-y-1 my-1 hover:bg-[#1d2738] cursor-pointer' key={msg.id}>
+                        <div className='px-7 py-1 space-y-1 my-1 hover:bg-[#1d2738] cursor-pointer flex gap-3 items-center' key={msg.id}>
+                            <img src={msg.data.profileUrl} alt="profilePic" className='w-10 h-10 rounded-full bg-center bg-cover'/>
+                            <div className="flex gap-1 flex-col">
                             <div className='flex gap-3 align-baseline'>
-                                <h2 className='text-white font-semibold'>Kaung Nay Lin Khant</h2>
+                                <h2 className='text-white font-semibold'>{msg.data.userName}</h2>
                                 <h3 className='text-[0.6rem]'>{
                                     (() => {
                                         const today = new Date().toLocaleDateString()
@@ -28,6 +30,7 @@ const Messages = ({message}) => {
                                 </h3>
                             </div>
                             <p>{msg.data.text}</p>
+                            </div>
                         </div>
                         )
                     })

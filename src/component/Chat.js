@@ -6,13 +6,11 @@ import { useEffect } from 'react'
 import Messages from "./component/Messages.js"
 import LoginArea from './component/LoginArea.js'
 
-const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn}) => {
-    
+const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profileUrl}) => {
     const [message,setMessage] = useState([])
     const messageRef = useRef()
     const handleSave = async (e) => {
         e.preventDefault()
-        console.log(isUserSignedIn)
         if (!isUserSignedIn()){
             alert("You need to login to sent messages");
             return ;
@@ -23,6 +21,8 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn}) => {
         }
         try{
             await addDoc(collection(db,server), {
+                userName: userName(),
+                profileUrl: profileUrl(),
                 text: messageRef.current.value,
                 created: Timestamp.now()
             })
@@ -31,7 +31,7 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn}) => {
             const chatarea = document.getElementById("chatarea")
             chatarea.scrollTop = chatarea.scrollHeight;
         }catch{
-            alert(e)
+            alert("Unexpected Error")
         }
     }
 
