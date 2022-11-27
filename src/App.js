@@ -33,6 +33,10 @@ const App = () => {
     return getAuth().currentUser.displayName;
   }
 
+  const getUserId = () => {
+    return getAuth().currentUser.uid;
+  }
+
 
   const authStateObserver = () => {
     const signInBtn = document.getElementById("signIn")
@@ -82,7 +86,7 @@ const App = () => {
   return (
     <div className="flex text-white bg-slate-800 h-screen">
       <Nav serverClicked={serverClicked}/>
-      <Chat server={server} signInClicked={signInClicked} signOutClicked={signOutClicked} isUserSignedIn={isUserSignedIn} userName={getUserName} profileUrl={getProfilePicUrl}/>
+      <Chat server={server} signInClicked={signInClicked} signOutClicked={signOutClicked} isUserSignedIn={isUserSignedIn} userName={getUserName} profileUrl={getProfilePicUrl} getUid = {getUserId}/>
     </div>
   );
 }

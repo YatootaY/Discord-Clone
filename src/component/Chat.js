@@ -1,12 +1,28 @@
 import React,{useRef} from 'react'
 import {db} from '../firebase.js'
-import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from '@firebase/firestore'
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  updateDoc,
+  Timestamp,
+} from 'firebase/firestore';
+import {
+    getStorage,
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+  } from '@firebase/storage';
 import { useState } from 'react'
 import { useEffect } from 'react'
 import Messages from "./component/Messages.js"
 import LoginArea from './component/LoginArea.js'
 
-const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profileUrl}) => {
+const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profileUrl,getUid}) => {
     const [message,setMessage] = useState([])
     const messageRef = useRef()
     const handleSaveText = async (e) => {
@@ -21,6 +37,7 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profi
         }
         try{
             await addDoc(collection(db,server), {
+                uid: getUid(),
                 userName: userName(),
                 profileUrl: profileUrl(),
                 text: messageRef.current.value,
@@ -41,11 +58,36 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profi
             alert("You need to login to sent messages");
             return ;
         }
-        if (messageRef.current.value === ""){
-            alert("You cannot sent empty message");
-            return ;
+        let file = e.target.files[0]
+        const input = document.getElementById("image-form")
+        input.reset();
+        if (!file.type.match('image.*')) {
+            alert("You are only allowed to share images.")
+            return;
         }
-        console.log(e)
+        
+        try{
+            const messageRef  = await addDoc(collection(getFirestore(), 'messages'), {
+                uid: getUid(),
+                userName: userName(),
+                profileUrl: profileUrl(),
+                imageUrl: "",
+                created: Timestamp.now()
+              });
+            console.log(messageRef )
+            const filePath = `${getUid()}/${messageRef.id}/${file.name}`;
+            const newImageRef = ref(getStorage(), filePath);
+            const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+            const publicImageUrl = await getDownloadURL(newImageRef);
+            await updateDoc(messageRef,{
+                imageUrl: publicImageUrl,
+                storageUri: fileSnapshot.metadata.fullPath
+            });
+            
+        }catch(e){
+            console.log(e)
+        }
     }
 
     useEffect( () => {
