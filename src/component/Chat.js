@@ -67,7 +67,7 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profi
         }
         
         try{
-            const messageRef  = await addDoc(collection(getFirestore(), 'messages'), {
+            const messageRef  = await addDoc(collection(getFirestore(), server), {
                 uid: getUid(),
                 userName: userName(),
                 profileUrl: profileUrl(),
@@ -91,7 +91,7 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profi
     }
 
     useEffect( () => {
-        const q = query(collection(db,server),orderBy("created"))
+        const q = query(collection(db,server),orderBy("created"),limit(50))
         onSnapshot(q,(querySnapshot) => {
             setMessage(querySnapshot.docs.map(doc => ({
                 id: doc.id,

@@ -3,7 +3,6 @@ import onePiece from "../images/one piece.jpg"
 import firebase from "../images/firebase.png"
 import Server from "./component/Server.js"
 import MainServer from "./component/MainServer.js"
-import LoginArea from "./component/LoginArea.js"
 
 const Nav = ({serverClicked}) => {
 
