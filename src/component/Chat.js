@@ -9,7 +9,7 @@ import LoginArea from './component/LoginArea.js'
 const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profileUrl}) => {
     const [message,setMessage] = useState([])
     const messageRef = useRef()
-    const handleSave = async (e) => {
+    const handleSaveText = async (e) => {
         e.preventDefault()
         if (!isUserSignedIn()){
             alert("You need to login to sent messages");
@@ -35,6 +35,19 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profi
         }
     }
 
+    const handleSaveImg = async(e) => {
+        e.preventDefault()
+        if (!isUserSignedIn()){
+            alert("You need to login to sent messages");
+            return ;
+        }
+        if (messageRef.current.value === ""){
+            alert("You cannot sent empty message");
+            return ;
+        }
+        console.log(e)
+    }
+
     useEffect( () => {
         const q = query(collection(db,server),orderBy("created"))
         onSnapshot(q,(querySnapshot) => {
@@ -48,19 +61,19 @@ const Chat = ({server,signInClicked,signOutClicked,isUserSignedIn,userName,profi
     },[server])
     
     return(
-        <div className='flex-grow flex flex-col text-slate-300 text-sm'>
-            <div className='h-20 px-6 shadow-md text-xl flex justify-between items-center'>
-                <h2># <span className='text-white font-bold'>{server}</span></h2>
+        <div className='flex-grow flex flex-col text-slate-300 text-sm w-full'>
+            <div className='h-20 px-6 shadow-md text-xl flex justify-between items-center gap-5'>
+                <h2 className='md:text-lg text-sm'># <span className='text-white font-bold'>{server}</span></h2>
                 <LoginArea signInClicked={signInClicked} signOutClicked={signOutClicked}/>
             </div>
             <Messages message={message}/>
             <div className="m-4 px-3 py-1 gap-5 flex items-center bg-slate-600 rounded-lg">
-                <form onSubmit={handleSave} className="grow">
+                <form onSubmit={handleSaveText} className="grow">
                     <input className="w-full focus:outline-none bg-slate-600 p-2 ml-3 flex-grow" id="msg" type="text" placeholder='Enter your message' ref={messageRef} autoComplete="off"/>
                 </form>
                 <form id="image-form" action="#">
                     <label>
-                    <input id="mediaCapture" type="file" accept="image/*" capture="camera" hidden={true}/>
+                    <input id="mediaCapture" type="file" accept="image/*" capture="camera" hidden={true} onChange={handleSaveImg}/>
                     <svg className="h-6 w-6 mr-3 text-slate-400 hover:text-slate-200 transition-all duration-200 cursor-pointer"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />  <circle cx="8.5" cy="8.5" r="1.5" />  <polyline points="21 15 16 10 5 21" /></svg>
                     </label>
                 </form>

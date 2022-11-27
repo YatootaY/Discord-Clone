@@ -11,7 +11,7 @@ const Messages = ({message}) => {
                             <img src={msg.data.profileUrl} alt="profilePic" className='w-10 h-10 rounded-full bg-center bg-cover'/>
                             <div className="flex gap-1 flex-col">
                             <div className='flex gap-3 align-baseline'>
-                                <h2 className='text-white font-semibold'>{msg.data.userName}</h2>
+                                <h2 className='text-white font-semibold md:text-base text-sm'>{msg.data.userName}</h2>
                                 <h3 className='text-[0.6rem]'>{
                                     (() => {
                                         const today = new Date().toLocaleDateString()
@@ -29,7 +29,7 @@ const Messages = ({message}) => {
                                 }
                                 </h3>
                             </div>
-                            <p>{msg.data.text}</p>
+                            <p className="md:text-base text-sm">{msg.data.text}</p>
                             </div>
                         </div>
                         )
