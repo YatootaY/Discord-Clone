@@ -1,6 +1,7 @@
 {
   "projects": {
-    "discord clone": "discord-clone-e0d12"
+    "discord clone": "discord-clone-e0d12",
+    "Test": "discord-clone-e0d12"
   },
   "targets": {},
   "etags": {}
